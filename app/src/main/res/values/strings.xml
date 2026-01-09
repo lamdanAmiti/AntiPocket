@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Anti Pocket</string>
+    <string name="accessibility_service_description">Intercepts outgoing calls to require confirmation before the call connects. This prevents accidental pocket dials.</string>
+</resources>

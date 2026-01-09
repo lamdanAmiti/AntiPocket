@@ -1,0 +1,68 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="968"
+    android:viewportHeight="968">
+  <group android:scaleX="0.67"
+      android:scaleY="0.67"
+      android:translateX="159.72"
+      android:translateY="159.72">
+    <group>
+      <clip-path
+          android:pathData="M0,0h968v968h-968z"/>
+      <!-- White background -->
+      <path
+          android:pathData="M0,0h968v968h-968z"
+          android:fillColor="#ffffff"/>
+      <!-- Rounded rectangle outline -->
+      <path
+          android:pathData="M210,16L758,16A194,194 0,0 1,952 210L952,758A194,194 0,0 1,758 952L210,952A194,194 0,0 1,16 758L16,210A194,194 0,0 1,210 16z"
+          android:strokeWidth="32"
+          android:fillColor="#00000000"
+          android:strokeColor="#000000"/>
+
+      <!-- Pocket outline - curved pants pocket -->
+      <path
+          android:pathData="M310,280
+                           L658,280
+                           Q688,280 688,310
+                           L688,640
+                           Q688,720 608,720
+                           L360,720
+                           Q280,720 280,640
+                           L280,310
+                           Q280,280 310,280
+                           Z"
+          android:strokeWidth="28"
+          android:fillColor="#00000000"
+          android:strokeColor="#000000"
+          android:strokeLineCap="round"
+          android:strokeLineJoin="round"/>
+
+      <!-- Pocket top fold/stitching -->
+      <path
+          android:pathData="M300,340 L668,340"
+          android:strokeWidth="20"
+          android:fillColor="#00000000"
+          android:strokeColor="#000000"
+          android:strokeLineCap="round"/>
+
+      <!-- White gap/padding behind prohibition line -->
+      <path
+          android:pathData="M260,720 L708,272"
+          android:strokeWidth="80"
+          android:fillColor="#00000000"
+          android:strokeColor="#ffffff"
+          android:strokeLineCap="round"/>
+
+      <!-- Prohibition diagonal line -->
+      <path
+          android:pathData="M270,710 L698,282"
+          android:strokeWidth="40"
+          android:fillColor="#00000000"
+          android:strokeColor="#000000"
+          android:strokeLineCap="round"/>
+
+    </group>
+  </group>
+</vector>

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.gradlew.bat assembleDebug)",
+      "Bash(./gradlew.bat:*)",
+      "Bash(where:*)",
+      "Bash(dir \"C:\\\\Program Files\\\\Eclipse Adoptium\"\" 2>nul || dir \"C:Program FilesJava\"\")",
+      "Bash(dir \"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\\\\bin\")",
+      "Bash(./gradlew assembleDebug:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(del /f \"\\\\?\\\\C:\\\\Users\\\\Eli\\\\AndroidStudioProjects\\\\AntiPocket\\\\nul\")",
+      "Bash(powershell -Command \"Remove-Item -Path ''\\\\?\\\\C:\\\\Users\\\\Eli\\\\AndroidStudioProjects\\\\AntiPocket\\\\nul'' -Force\")"
+    ]
+  }
+}
