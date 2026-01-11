@@ -1,4 +1,6 @@
-# <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="Anti Pocket" width="48" height="48"> Anti Pocket
+<img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="Anti Pocket" width="100" height="100">
+
+# Anti Pocket
 
 Prevent accidental pocket dials and unauthorized calls.
 
