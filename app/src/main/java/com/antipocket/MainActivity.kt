@@ -220,22 +220,6 @@ class MainActivity : AppCompatActivity() {
         }
         settingsContainer.addView(hideLauncherToggle)
 
-        settingsContainer.addView(createDivider())
-
-        // Uninstall button
-        val uninstallContainer = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(24), dp(16), dp(24), dp(32))
-        }
-        val uninstallButton = TextView(this).apply {
-            text = "[ UNINSTALL APP ]"
-            textSize = 16f
-            setTextColor(0xFF000000.toInt())
-            setOnClickListener { uninstallApp() }
-        }
-        uninstallContainer.addView(uninstallButton)
-        settingsContainer.addView(uninstallContainer)
-
         mainContainer.addView(settingsContainer)
 
         scrollView.addView(mainContainer)
@@ -335,26 +319,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-
-    private fun uninstallApp() {
-        // Stop services
-        PocketDetectionService.stop(this)
-
-        // Clear preferences
-        prefs.lockWhenInPocket = false
-        prefs.antiPocketEnabled = false
-        prefs.secureCallsEnabled = false
-
-        // Re-enable launcher icon if hidden
-        setLauncherIconVisible(true)
-
-        // Request uninstall
-        val intent = Intent(Intent.ACTION_DELETE).apply {
-            data = Uri.parse("package:$packageName")
-        }
-        startActivity(intent)
     }
 
     private fun updateLockToggleVisibility() {

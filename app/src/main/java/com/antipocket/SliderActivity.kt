@@ -19,6 +19,7 @@ class SliderActivity : AppCompatActivity() {
     private var mode: VerticalSliderView.SliderMode = VerticalSliderView.SliderMode.CALL
     private var isRedialMode = false
     private var callPlaced = false
+    private var createdTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +33,30 @@ class SliderActivity : AppCompatActivity() {
         )
 
         prefs = PreferencesManager.getInstance(this)
+        initFromIntent(intent)
+        createUI()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let { initFromIntent(it) }
+        // Reset the slider if it exists
+        if (::sliderView.isInitialized) {
+            sliderView.reset()
+        }
+    }
+
+    private fun initFromIntent(intent: Intent) {
+        // Reset state for fresh start
+        callPlaced = false
+        createdTime = System.currentTimeMillis()
+
         mode = if (intent.getStringExtra(EXTRA_MODE) == MODE_UNLOCK) {
             VerticalSliderView.SliderMode.UNLOCK
         } else {
             VerticalSliderView.SliderMode.CALL
         }
         isRedialMode = intent.getBooleanExtra(EXTRA_REDIAL, false)
-
-        createUI()
     }
 
     private fun createUI() {
@@ -83,15 +100,41 @@ class SliderActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT
         ).apply {
             topMargin = dp(120)
-            bottomMargin = dp(40)
+            bottomMargin = dp(100)
         }
         container.addView(sliderView, sliderParams)
+
+        // Add cancel button at bottom
+        val cancelButton = TextView(this).apply {
+            text = "[ CANCEL ]"
+            textSize = 18f
+            setTextColor(0xFF000000.toInt())
+            gravity = Gravity.CENTER
+            setPadding(dp(24), dp(16), dp(24), dp(16))
+            setOnClickListener {
+                handleCancel()
+            }
+        }
+
+        val cancelParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+            bottomMargin = dp(32)
+        }
+        container.addView(cancelButton, cancelParams)
 
         setContentView(container)
     }
 
     private fun dp(value: Int): Int {
         return (value * resources.displayMetrics.density).toInt()
+    }
+
+    private fun handleCancel() {
+        prefs.pendingCallNumber = null
+        finish()
     }
 
     private fun handleSlideComplete() {
@@ -145,7 +188,9 @@ class SliderActivity : AppCompatActivity() {
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
         // User pressed home or navigated away - cancel and close
-        if (!callPlaced) {
+        // But only if the activity has been visible for at least 500ms (to prevent race conditions)
+        val timeSinceCreated = System.currentTimeMillis() - createdTime
+        if (!callPlaced && timeSinceCreated > 500) {
             prefs.pendingCallNumber = null
             finish()
         }
@@ -168,7 +213,9 @@ class SliderActivity : AppCompatActivity() {
         fun startForCall(context: Context) {
             val intent = Intent(context, SliderActivity::class.java).apply {
                 putExtra(EXTRA_MODE, MODE_CALL)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION
             }
             context.startActivity(intent)
         }
@@ -176,7 +223,9 @@ class SliderActivity : AppCompatActivity() {
         fun startForUnlock(context: Context) {
             val intent = Intent(context, SliderActivity::class.java).apply {
                 putExtra(EXTRA_MODE, MODE_UNLOCK)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION
             }
             context.startActivity(intent)
         }

@@ -51,6 +51,7 @@ class VerticalSliderView @JvmOverloads constructor(
     private var knobRadius = 40f * resources.displayMetrics.density
     private var trackWidth = 100f * resources.displayMetrics.density
     private var trackPadding = 20f * resources.displayMetrics.density
+    private var topMargin = 10f * resources.displayMetrics.density
 
     private var knobY = 0f
     private var minY = 0f
@@ -70,7 +71,7 @@ class VerticalSliderView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        minY = knobRadius + trackPadding
+        minY = knobRadius + trackPadding + topMargin
         maxY = h - knobRadius - trackPadding
         knobY = minY
     }

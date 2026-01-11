@@ -47,6 +47,9 @@ class AntiPocketCallRedirectionService : CallRedirectionService() {
         // Store the number and cancel the call
         prefs.pendingCallNumber = phoneNumber
 
+        // Mark that we just intercepted a call (to prevent AccessibilityService from also intercepting)
+        lastInterceptTime = System.currentTimeMillis()
+
         // Cancel the call
         cancelCall()
 
@@ -63,5 +66,8 @@ class AntiPocketCallRedirectionService : CallRedirectionService() {
     companion object {
         @Volatile
         var shouldBypass = false
+
+        @Volatile
+        var lastInterceptTime = 0L
     }
 }
